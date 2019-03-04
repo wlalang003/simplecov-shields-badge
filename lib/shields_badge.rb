@@ -50,7 +50,7 @@ module SimpleCov
         %x(git reset -- .)
         %x(mv ../badge.svg .)
         %x(git add badge.svg)
-        %x(git commit -a -m 'CI: Coverage for #{ENV["CIRCLE_SHA1"]} on branch #{ENV["CIRCLE_BRANCH"]}')
+        %x(git commit -a -m 'CI: Coverage for #{ENV["CIRCLE_SHA1"]} on branch #{ENV["CIRCLE_BRANCH"]} [ci skip]')
         %x(git push upstream gh-pages:gh-pages)
         %x(git checkout $CIRCLE_BRANCH)
       end
