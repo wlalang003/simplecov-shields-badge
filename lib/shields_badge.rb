@@ -46,7 +46,7 @@ module SimpleCov
         %x(git config --global user.name #{github_user})
         %x(git config --global user.email #{github_mail})
         %x(git fetch upstream)
-        %x(git checkout gh-pages -f)
+        %x(git checkout --track upstream/gh-pages -f)
         %x(git reset -- .)
         %x(mv ../badge.svg .)
         %x(git add badge.svg)
