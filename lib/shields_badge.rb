@@ -32,13 +32,20 @@ module SimpleCov
       end
 
       def upload_to_gh_pages
-        github_user  = ENV["GITHUB_USER"]
-        github_mail  = ENV["GITHUB_MAIL"]
-        github_org   = ENV["GITHUB_ORG"]
-        github_repo  = ENV["GITHUB_REPO"]
-        github_token = ENV["GITHUB_ACCESS_TOKEN"]
+        gt_creds = {}
+        gt_creds['GITHUB_USER'] = github_user  = ENV["GITHUB_USER"]
+        gt_creds['GITHUB_MAIL'] = github_mail  = ENV["GITHUB_MAIL"]
+        gt_creds['GITHUB_ORG'] = github_org   = ENV["GITHUB_ORG"]
+        gt_creds['GITHUB_REPO'] = github_repo  = ENV["GITHUB_REPO"]
+        gt_creds['GITHUB_ACCESS_TOKEN'] = github_token = ENV["GITHUB_ACCESS_TOKEN"]
 
-        return unless (github_user and github_mail and github_org and github_repo and github_token)
+        unless (github_user and github_mail and github_org and github_repo and github_token)
+          puts "===== Missing github env variables to update badge. Skipping ====="
+          puts gt_creds.select {|k, v| v.nil? }.keys
+          return
+        else
+          puts "===== Updating coverage badge ====="
+        end
 
         %x(mv badge.svg ../)
         %x(git remote remove upstream)
